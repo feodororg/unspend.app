@@ -1,0 +1,108 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 5vw;
+}
+
+label {
+    display: block;
+}
+
+#section-amount {
+    display: flex;
+    margin-bottom: 5vw;
+}
+
+label>input[type="radio"] {
+    display: none;
+}
+
+h1 {
+    margin: 5vw 0;
+    padding: 0;
+    font-size: 10vw;
+}
+
+.reset-amount {
+    font-size: 10vw;
+    width: 12vw;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    cursor: pointer;
+    color: #000;
+}
+
+input[type="number"] {
+    font-size: 10vw;
+    display: block;
+    width: 100%;
+    text-align: left;
+
+    border: 1px solid #000;
+    border-radius: 1vw;
+}
+
+#periods {
+    display: flex;
+    flex-direction: column;
+    justify-items: space-between;
+}
+
+#amountSection .inline>* {
+    display: flex;
+    flex-grow: 1;
+}
+
+
+#periods .label {
+    font-size: 5vw;
+    border: 1px solid #000;
+    border-radius: 5vw;
+    padding: 2vw 3vw;
+}
+
+#periods label,
+#amountSection .inline {
+    font-size: 8vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+#periods label:has(input[type="radio"]:checked) {
+    background-color: #f0f0f0;
+    margin-left: -5vw;
+    padding-left: 5vw;
+    margin-right: -5vw;
+    padding-right: 5vw;
+}
+
+#periods input[type="radio"]:checked~.label {
+    border: 1px solid transparent;
+    background: none;
+}
+
+#periods .amount {
+    flex-grow: 1;
+    text-align: right;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#periods .amount .in-currency {
+    flex-grow: 1;
+    text-align: right;
+}
+
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
