@@ -118,3 +118,8 @@ window.document
 window.document.getElementsByName("period").forEach((radio) => {
     radio.addEventListener("change", recalcForm);
 });
+
+if ((window.navigator as any)?.standalone === true
+    || window.matchMedia('(display-mode: standalone)').matches) {
+    window.document.body.classList.add("standalone");
+}

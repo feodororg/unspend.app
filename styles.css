@@ -49,6 +49,10 @@ input[type="number"] {
     border-radius: 1vw;
 }
 
+input[type="number"]::placeholder {
+    font-size: 4vw
+}
+
 #periods {
     display: flex;
     flex-direction: column;
@@ -117,4 +121,14 @@ input[type="number"] {
 
 .install {
     line-height: 6vw;
+}
+
+.standalone .install {
+    display: none;
+}
+
+@media all and (display-mode: standalone) {
+    .install {
+        display: none;
+    }
 }
