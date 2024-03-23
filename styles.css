@@ -28,6 +28,24 @@ h1 sup {
     font-style: italic;
 }
 
+h2 {
+    margin-top: 0;
+    margin-bottom: 3vw;
+}
+
+.widget h2 {
+    float: left;
+}
+
+.hidden .switcher {
+    display: none;
+}
+
+.widget.period .toggle-settings,
+.hidden .toggle-settings {
+    display: none;
+}
+
 #section-amount {
     display: flex;
     margin-bottom: 5vw;
@@ -70,10 +88,21 @@ input.number::placeholder {
     font-size: 6vw
 }
 
-#periods {
+.switcher {
     display: flex;
     flex-direction: column;
-    justify-items: space-between;
+    clear: both;
+}
+
+.toggle-settings {
+    float: right;
+    margin-top: 0;
+    line-height: 6vw;
+}
+
+.widget {
+    clear: both;
+    margin-bottom: 5vw;
 }
 
 #amountSection .inline>* {
@@ -82,15 +111,27 @@ input.number::placeholder {
 }
 
 
-#periods .label {
+.switcher .label,
+.switcher .convert {
     font-size: 5vw;
     border: 1px solid #000;
     border-radius: 5vw;
     padding: 2vw 3vw;
 }
 
-#periods label,
-#amountSection .inline {
+.switcher .convert {
+    position: absolute;
+    left: 20vw;
+    display: none;
+}
+
+
+.switcher.currency .unused {
+    display: none;
+}
+
+.switcher label {
+    position: relative;
     font-size: 8vw;
     display: flex;
     justify-content: space-between;
@@ -98,8 +139,12 @@ input.number::placeholder {
     margin-bottom: 2vw;
 }
 
+.switcher.currency label {
+    font-variant: all-small-caps;
+}
 
-#periods label:has(input[type="radio"]:checked) {
+
+section:not(.settings) .switcher label:has(input[type="radio"]:checked) {
     background-color: #f0f0f0;
     margin-left: -5vw;
     padding-left: 5vw;
@@ -107,19 +152,61 @@ input.number::placeholder {
     padding-right: 5vw;
 }
 
-#periods input[type="radio"]:checked~.label {
+#switcher-currency .convert {
+    display: inline;
+}
+
+.toggle {
+    position: absolute;
+    left: 20vw;
+    display: none;
+    font-size: 5vw;
+    border: 1px solid #000;
+    border-radius: 5vw;
+    padding: 2vw 3vw;
+    background: #fff;
+}
+
+.toggle::before {
+    content: 'on';
+    color: #000;
+}
+.toggle::after {
+    content: 'off';
+    color: #fff;
+}
+.unused .toggle {
+    background: #000;
+}
+
+.settings #switcher-currency .toggle {
+    display: inline;
+}
+
+
+.settings .switcher .unused {
+    display: flex;
+}
+
+.settings #switcher-currency .convert,
+#switcher-currency label:has(input[type="radio"]:checked) .convert {
+    display: none;
+}
+
+.settings .switcher .label,
+.switcher input[type="radio"]:checked~.label {
     border: 1px solid transparent;
     background: none;
 }
 
-#periods .amount {
+.switcher .amount {
     flex-grow: 1;
     text-align: right;
     justify-content: space-between;
     align-items: center;
 }
 
-#periods .amount .in-currency {
+.switcher .amount .in-currency {
     flex-grow: 1;
     text-align: right;
 }

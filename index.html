@@ -7,11 +7,11 @@
   <meta charset="UTF-8" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="./styles.css" />
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
   <link rel="apple-touch-icon" sizes="180x180" href="./i/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./i/favicon//favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./i/favicon//favicon-16x16.png">
-  <link rel="manifest" href="./i/favicon/site.webmanifest">
+  <link rel="icon" type="image/png" sizes="16x16" href="/i/favicon//favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body>
@@ -26,13 +26,8 @@
         placeholder="Items" />
     </section>
 
-    <section id="periods">
-      <label class="daily">
-        <input type="radio" class="daily" name="period" value="daily" checked />
-        <span class="label">Daily</span>
-        <span class="amount"></span>
-      </label>
-    </section>
+    <section class="widget" id="currency"></section>
+    <section class="widget" id="period"></section>
   </form>
 
   <section class="about">
@@ -52,12 +47,12 @@
 
     <section class="howto">
       <p>On <strong>iPhone</strong>, tap the <strong>Share</strong> menu button <img alt="" class="howto-icon"
-          src="./i/ios-share.png" /> in <strong>Safari</strong>, select <strong>Add to Home Screen</strong> <img
-          class="howto-icon" alt="" src="./i/ios-homescreen.png" /> and tap <strong>Add</strong>.</p>
+          src="/i/ios-share.png" /> in <strong>Safari</strong>, select <strong>Add to Home Screen</strong> <img
+          class="howto-icon" alt="" src="/i/ios-homescreen.png" /> and tap <strong>Add</strong>.</p>
 
       <p>On <strong>Android</strong> in <strong>Chrome</strong>, tap the three vertical dots button <img alt=""
-          class="howto-icon" src="./i/android-more.png" /> at the top right corner, select <strong>Add to Home
-          screen</strong> <img alt="" class="howto-icon" src="./i/android-homescreen.png" />, tap <strong>Add</strong>
+          class="howto-icon" src="/i/android-more.png" /> at the top right corner, select <strong>Add to Home
+          screen</strong> <img alt="" class="howto-icon" src="/i/android-homescreen.png" />, tap <strong>Add</strong>
         and
         tap <strong>Add</strong>.</p>
 
@@ -72,9 +67,9 @@
 
   <script>
     (async function () {
-      const version = '0.1.2';
+      const version = '0.1.3';
       document.getElementById('version').textContent = version;
-      const response = await fetch(`./app.ts?${version}`);
+      const response = await fetch(`/app.ts?${version}`);
       const tsCode = await response.text();
       const jsCode = ts.transpile(tsCode);
       eval(jsCode);
