@@ -41,7 +41,7 @@ h2 {
     display: none;
 }
 
-.widget.period .toggle-settings,
+#period .toggle-settings,
 .hidden .toggle-settings {
     display: none;
 }
@@ -139,7 +139,11 @@ input.number::placeholder {
     margin-bottom: 2vw;
 }
 
-.switcher.currency label {
+.settings .toggle-settings::before {
+    content: "Close ";
+}
+
+.switcher.currency .label {
     font-variant: all-small-caps;
 }
 
