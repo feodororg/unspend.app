@@ -15,13 +15,15 @@
 </head>
 
 <body>
-  <form id="amountForm">
-    <h1>Unspend</h1>
+  <form id="amountForm" onsubmit="event.preventDefault();">
+    <h1>Unspend<sup>β <span id="version">0.1.2</span></sup></h1>
 
     <section id="section-amount">
-      <input autofocus type="number" class="amount" name="amount" inputmode="numeric" pattern="[0-9]*"
-        placeholder="Enter the amount you think of spending" />
+      <input autofocus type="text" class="amount recalc number" name="amount" inputmode="decimal" pattern="[0-9,.]*"
+        placeholder="Price" />
       <input class="reset-amount" value="×" type="reset" />
+      <input autofocus type="text" class="count recalc number" name="count" inputmode="decimal" pattern="[0-9,.]*"
+        placeholder="Items" />
     </section>
 
     <section id="periods">
@@ -36,11 +38,11 @@
   <section class="about">
     <h2>About</h2>
     <p>The Unspend app helps you abstain from impulsive or excessive spending by showing clearly what a particular
-      purchase would amount to if repeated daily, twice a week, weekly, monthly, twice a month, etc. It should
+      purchase would amount to if repeated daily, weekly, monthly, and yearly. It should
       supposedly scare you into frugality.
       More horrific features are on their way.</p>
 
-
+      <p><a href="#" onclick="event.preventDefault(); window.location.reload(true)">Refresh to update</a> to the latest version.</p>
   </section>
 
   <section class="install">
@@ -70,7 +72,9 @@
 
   <script>
     (async function () {
-      const response = await fetch('./app.ts');
+      const version = '0.1.2';
+      document.getElementById('version').textContent = version;
+      const response = await fetch(`./app.ts?${version}`);
       const tsCode = await response.text();
       const jsCode = ts.transpile(tsCode);
       eval(jsCode);

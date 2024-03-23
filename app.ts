@@ -1,24 +1,18 @@
 const periods = [
+    "once",
     "daily",
-    "biweekly",
     "weekly",
-    "bimonthly",
     "monthly",
-    "quarterly",
-    "biyearly",
     "yearly",
 ] as const;
 
 type Period = (typeof periods)[number];
 
 const periodMultiplier: Record<Period, number> = {
+    once: 1,
     daily: 366,
-    biweekly: (366 / 7) * 2,
     weekly: 366 / 7,
-    bimonthly: 24,
     monthly: 12,
-    quarterly: 4,
-    biyearly: 2,
     yearly: 1,
 };
 
@@ -40,10 +34,22 @@ type ByPeriod = {
 
 const NUM = new Intl.NumberFormat();
 
+const parseDecimal = (value: string): number => {
+    console.log({value, chars: value.split('').map(char => char.charCodeAt(0)), parsed: parseFloat(value.replace(/,/g, "."))})
+    return   parseFloat(value.replace(/,/g, "."))
+};
+
 const annualizeAmount = ({ period, amount }: AmountWithPeriod): number =>
     amount * periodMultiplier[period];
 
+const amountOnce = (amount: number) => periods.reduce((acc, period) => {
+    acc[period] = amount;
+    return acc;
+}, {} as ByPeriod);
+
 const calculateByPeriod = ({ period, amount }: AmountWithPeriod): ByPeriod => {
+    if (period === 'once') return amountOnce(amount);
+
     const annualizedAmount = annualizeAmount({ period, amount });
 
     let results = {} as ByPeriod;
@@ -53,6 +59,7 @@ const calculateByPeriod = ({ period, amount }: AmountWithPeriod): ByPeriod => {
     });
 
     results[period] = amount;
+    results.once = amount;
     results.yearly = annualizedAmount;
 
     return results as ByPeriod;
@@ -76,7 +83,7 @@ const renderPeriods = () => {
     periods.forEach((period) => {
         html += `
             <label class="${period}">
-                <input type="radio" class="${period}" name="period" value="${period}" ${period === defaultPeriod ? "checked" : ""
+                <input type="radio" class="recalc ${period}" name="period" value="${period}" ${period === defaultPeriod ? "checked" : ""
             } />
                 <span class="label">${period}</span>
                 <span class="amount">0</span>
@@ -90,13 +97,18 @@ const renderPeriods = () => {
 const recalcForm = (event: Event) => {
     event.preventDefault();
 
-    const amount = (window.document.querySelector("input.amount") as HTMLInputElement)?.value;
+    const price = (window.document.querySelector("input.amount") as HTMLInputElement)?.value;
+
+    const count = (window.document.querySelector("input.count") as HTMLInputElement)?.value;
+
+    const amount = parseDecimal(price) * (parseDecimal(count) || 1) || 0;
+
     const period = (window.document.querySelector(
         'input[name="period"]:checked'
     ) as HTMLInputElement)?.value;
 
     const withPeriod = {
-        amount: parseFloat(amount) || 0,
+        amount,
         period: period as Period,
     };
 
@@ -111,12 +123,23 @@ if (periodsElement) {
     periodsElement.innerHTML = renderPeriods();
 }
 
-window.document
-    ?.querySelector("input.amount")
-    ?.addEventListener("input", recalcForm);
+Array.from(window.document.getElementsByClassName("recalc")).forEach((element) => {
+    element.addEventListener("input", recalcForm);
+});
 
-window.document.getElementsByName("period").forEach((radio) => {
-    radio.addEventListener("change", recalcForm);
+const preventDefault = (event: Event) => {
+    event.preventDefault();
+}
+
+Array.from(window.document.getElementsByClassName("number")).forEach((element) => {
+    element.addEventListener("focus", (e) => {
+        e.preventDefault();
+
+        element.addEventListener("contextmenu", preventDefault);
+        (element as HTMLInputElement)?.select();
+
+        setTimeout(() => element.removeEventListener("contextmenu", preventDefault), 200);
+    });
 });
 
 if ((window.navigator as any)?.standalone === true
